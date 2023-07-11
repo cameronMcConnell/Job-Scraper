@@ -8,6 +8,7 @@
     width: 75%;
     font-size: 24px;
     line-height: 2;
+    border: 1px solid black;
 }
 
 #exit-button {
@@ -15,4 +16,20 @@
     padding: 8px;
     background-color: white;
     border: 1px solid black;
+    box-shadow: 0 1px gray;
+}
+
+#exit-button:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+}
+  
+#exit-button:active {
+    filter: brightness(85%);
+    box-shadow: none;
+    transform: translateY(1px);
+}
+
+p {
+    margin: 0 20%;
 }

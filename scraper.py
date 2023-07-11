@@ -32,7 +32,7 @@ chrome_options = Options()
 driver = webdriver.Chrome(options=chrome_options)
 driver.maximize_window()
 
-driver.get('https://www.linkedin.com/jobs/search?keywords=Software%20Engineer&location=United%20States&locationId=&geoId=103644278&f_TPR=&f_E=2&f_JT=F&position=1&pageNum=0')
+driver.get('https://www.linkedin.com/jobs/search?keywords=Software%20Engineer%20Entry&location=United%20States&geoId=103644278&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0')
 
 time.sleep(2)
 

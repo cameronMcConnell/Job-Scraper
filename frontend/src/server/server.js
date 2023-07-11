@@ -54,7 +54,7 @@ app.post('/txt', (req, res) => {
     })
 
     req.on('end', () => {
-        fs.appendFile(TXT_PATH, receivedString,  (err) => {
+        fs.appendFile(TXT_PATH, receivedString + '\n',  (err) => {
             if (err) { console.log('Error writing to file.') }
         })
     })
