@@ -26,23 +26,21 @@ with open(CSV_PATH, 'w', newline='') as csv_file:
     
 chrome_options = Options()
 #chrome_options.add_argument("--headless")  # Run Chrome in headless mode
-#chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration
-#chrome_options.add_argument("--window-size=1920,1080")  # Set the window size
 
 driver = webdriver.Chrome(options=chrome_options)
 driver.maximize_window()
 
 driver.get('https://www.linkedin.com/jobs/search?keywords=Software%20Engineer%20Entry&location=United%20States&geoId=103644278&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0')
-
 time.sleep(2)
 
 with open(CSV_PATH, 'w', newline='') as csv_file:
 
-    column_names = ['title', 'company', 'location', 'date', 'description', 'url'];
+    column_names = ['title', 'company', 'location', 'date', 'description', 'url']
     writer = csv.DictWriter(csv_file, fieldnames=column_names)
     writer.writeheader()
 
     while 1:
+      try:
 
         job_cards = driver.find_elements(By.CLASS_NAME, 'base-card')
         description = driver.find_element(By.CLASS_NAME, 'show-more-less-html__markup')
@@ -94,3 +92,7 @@ with open(CSV_PATH, 'w', newline='') as csv_file:
 
             driver.close()
             driver.switch_to.window(driver.window_handles[0])
+
+      except:
+        driver.get('https://www.linkedin.com/jobs/search?keywords=Software%20Engineer%20Entry&location=United%20States&geoId=103644278&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0')
+        time.sleep(2)

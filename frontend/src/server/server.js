@@ -7,8 +7,8 @@ const app = express();
 const PORT = 5000;
 
 // Constant paths to the files used to read and write job data.
-const TXT_PATH = '../data/urls.txt';
-const CSV_PATH = '../data/jobs.csv'
+const TXT_PATH = '../../../data/urls.txt';
+const CSV_PATH = '../../../data/jobs.csv'
 
 // CORS headers.
 app.use(cors());

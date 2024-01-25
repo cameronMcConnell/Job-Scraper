@@ -14,9 +14,32 @@ interface jobObject {
 }
 
 const App = (): JSX.Element => {
+  // Maps to table.
+  let [jobs, setJobs] = useState<jobObject[]>([]);
+
+  // Handled by onClick event from show description.
+  let [isDescription, setIsDescription] = useState<boolean>(false);
+  
+  // Prop passed to the Description componennt.
+  let [jobDescription, setJobDescription] = useState<string>('');
+
+  let [jobTitle, setJobTitle] = useState<string>('');
+
+  let [location, setLocation] = useState<string>('');
+
+  let [numberOfJobs, setNumberOfJobs] = useState<number>(1);
+
+  // Headers to the table columns.
+  const columnHeaders: string[] = ['Title', 'Company', 'Location', 'Date', 'Description', 'Url', 'Not Interested', 'Applied'];
+
+  // Props for the description component.
+  let descriptionProps = {description: jobDescription, setIsDescription: setIsDescription, setJobDescription: setJobDescription};
+
+  // Init table on start up.
+  useEffect(() => fetchJobs(), []);
 
   // Fetch the data from the backend/express server.
-  const getJobs = (): void => {
+  const fetchJobs = (): void => {
     fetch('http://localhost:5000/csv')
       .then((response) => response.json())
       .then((data) => {
@@ -27,31 +50,8 @@ const App = (): JSX.Element => {
       })
   }
 
-  // Maps to table.
-  let [jobs, setJobs] = useState<jobObject[]>([]);
-
-  // Handled by onClick event from show description.
-  let [isDescription, setIsDescription] = useState<boolean>(false);
-  
-  // Prop passed to the Description componennt.
-  let [jobDescription, setJobDescription] = useState<string>('');
-
-  // Headers to the table columns.
-  const columnHeaders: string[] = ['Title', 'Company', 'Location', 'Date', 'Description', 'Url', 'Not Interested', 'Applied'];
-
-  // Init table on start up.
-  useEffect(() => getJobs(), []);
-
-  // Handle de-render of component.
-  const handleReturn = (w: boolean, x: string): void => {
-    setIsDescription(w);
-    setJobDescription(x);
-  } 
-
   // Submits job url to server to be logged into txt file.
   const logURL = (event: React.ChangeEvent<HTMLInputElement>, stringToSend: string): void => {
-    //event.preventDefault();
-
     if (event.target.checked) {
       fetch('http://localhost:5000/txt', {
         method: 'POST',
@@ -64,11 +64,20 @@ const App = (): JSX.Element => {
     }
   }
 
+  // Submit of data from user input.
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    if (jobTitle && location) {
+      fetchJobs()
+    } 
+  }
+
   return (
-    <div>
-      {isDescription ? <Description description={jobDescription} onReturn={handleReturn}/> : ''}
+    <div id='main-container'>
+      {isDescription ? <Description {...descriptionProps}/> : ''}
       <header>
-        <h1>Software Engineer Job Scraper</h1>
+        <h1>Job-Scraper</h1>
       </header>
       <main>
         <table>
