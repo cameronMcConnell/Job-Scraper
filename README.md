@@ -18,7 +18,6 @@ https://github.com/cameronMcConnell/Job-Scraper/assets/93450810/9f99766e-beeb-4c
 ### Dependencies
 
 * ```python```
-* ```mongodb```
 * ```npm```
 
 ### Installing
